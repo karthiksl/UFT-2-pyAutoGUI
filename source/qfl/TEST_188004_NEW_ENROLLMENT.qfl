@@ -1,0 +1,84 @@
+' ============================================================
+' QFL File  : TEST_188004_NEW_ENROLLMENT.qfl
+' Test ID   : TEST-188004
+' Screen    : Epic New Enrollment Panel
+' Purpose   : Open the enrollment panel for a member, select
+'             a health plan, enter coverage effective date,
+'             and submit the enrollment transaction.
+' Author    : UFT Automation Team
+' Date      : 2024-01-20
+' ============================================================
+
+Public Function TEST_188004_NewEnrollment()
+
+    ' ── Load test data ─────────────────────────────────────────
+    Dim sMemberID, sPlanCode, sEffectiveDate, sEnrollmentType
+    sMemberID       = DataTable("MemberID",       dtLocalSheet)
+    sPlanCode       = DataTable("PlanCode",        dtLocalSheet)
+    sEffectiveDate  = DataTable("EffectiveDate",   dtLocalSheet)
+    sEnrollmentType = DataTable("EnrollmentType",  dtLocalSheet)
+
+    ' ── Step 1: Confirm member chart is open ───────────────────
+    If Not Page("MemberChart").Exist(10) Then
+        Reporter.ReportEvent micFail, "Step 1", "Member chart not open for MRN: " & sMemberID
+        Exit Function
+    End If
+
+    ' ── Step 2: Navigate to Enrollment activity ────────────────
+    WebElement("ActivityMenu").Click
+    Wait 1
+    WebElement("EnrollmentMenuItem").Click
+    Wait 2
+
+    ' ── Step 3: Verify Enrollment panel loaded ─────────────────
+    If Not Page("EnrollmentPanel").Exist(15) Then
+        Reporter.ReportEvent micFail, "Step 3", "Enrollment panel did not open"
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 3", "Enrollment panel loaded"
+
+    ' ── Step 4: Select Enrollment Type ─────────────────────────
+    WebList("EnrollmentTypeDropdown").Select sEnrollmentType
+    Wait 1
+
+    ' ── Step 5: Select Health Plan ─────────────────────────────
+    WebList("PlanDropdown").Select sPlanCode
+    Wait 1
+    If WebList("PlanDropdown").GetROProperty("value") <> sPlanCode Then
+        Reporter.ReportEvent micFail, "Step 5", "Plan selection failed for code: " & sPlanCode
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 5", "Plan selected: " & sPlanCode
+
+    ' ── Step 6: Enter Coverage Effective Date ──────────────────
+    WebEdit("EffectiveDateInput").Set sEffectiveDate
+    Wait 1
+
+    ' ── Step 7: Verify date accepted (no validation error) ─────
+    If WebElement("DateValidationError").Exist(2) Then
+        Reporter.ReportEvent micFail, "Step 7", "Date validation error shown for: " & sEffectiveDate
+        Exit Function
+    End If
+
+    ' ── Step 8: Click Submit ────────────────────────────────────
+    WebButton("SubmitEnrollment").Click
+    Wait 3
+
+    ' ── Step 9: Verify confirmation message ────────────────────
+    If Not Page("ConfirmationPage").Exist(15) Then
+        Reporter.ReportEvent micFail, "Step 9", "Confirmation page did not appear after submit"
+        Exit Function
+    End If
+
+    Dim sConfirmText
+    sConfirmText = Browser("Epic").Page("ConfirmationPage").WebElement("ConfirmationMessage").GetROProperty("innerText")
+    If Not (InStr(sConfirmText, "successfully") > 0) Then
+        Reporter.ReportEvent micFail, "Step 9", "Enrollment not confirmed. Message: " & sConfirmText
+        Exit Function
+    End If
+
+    ' ── Step 10: Log pass ───────────────────────────────────────
+    Reporter.ReportEvent micPass, "TEST_188004_NewEnrollment", _
+        "Enrollment submitted. MemberID: " & sMemberID & " Plan: " & sPlanCode & " Effective: " & sEffectiveDate
+
+End Function

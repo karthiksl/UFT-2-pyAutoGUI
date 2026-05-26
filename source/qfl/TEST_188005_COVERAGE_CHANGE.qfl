@@ -1,0 +1,101 @@
+' ============================================================
+' QFL File  : TEST_188005_COVERAGE_CHANGE.qfl
+' Test ID   : TEST-188005
+' Screen    : Epic Coverage Change Transaction
+' Purpose   : Locate an existing active member, initiate a
+'             coverage change, select a new health plan,
+'             set a new effective date, and confirm the
+'             change was saved correctly.
+' Author    : UFT Automation Team
+' Date      : 2024-01-20
+' ============================================================
+
+Public Function TEST_188005_CoverageChange()
+
+    ' ── Load test data ─────────────────────────────────────────
+    Dim sMemberID, sOldPlanCode, sNewPlanCode, sChangeEffectiveDate, sChangeReason
+    sMemberID            = DataTable("MemberID",            dtLocalSheet)
+    sOldPlanCode         = DataTable("OldPlanCode",         dtLocalSheet)
+    sNewPlanCode         = DataTable("NewPlanCode",         dtLocalSheet)
+    sChangeEffectiveDate = DataTable("ChangeEffectiveDate", dtLocalSheet)
+    sChangeReason        = DataTable("ChangeReason",        dtLocalSheet)
+
+    ' ── Step 1: Confirm member chart is open ───────────────────
+    If Not Page("MemberChart").Exist(10) Then
+        Reporter.ReportEvent micFail, "Step 1", "Member chart not open. MRN: " & sMemberID
+        Exit Function
+    End If
+
+    ' ── Step 2: Confirm current plan before change ─────────────
+    WebElement("CoverageTab").Click
+    Wait 2
+    Dim sCurrentPlan
+    sCurrentPlan = Browser("Epic").Page("CoverageSection").WebElement("PlanNameField").GetROProperty("innerText")
+    If Not (InStr(sCurrentPlan, sOldPlanCode) > 0) Then
+        Reporter.ReportEvent micFail, "Step 2", "Current plan is not the expected old plan. Got: " & sCurrentPlan
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 2", "Current plan confirmed: " & sCurrentPlan
+
+    ' ── Step 3: Open Coverage Change activity ──────────────────
+    WebElement("ActivityMenu").Click
+    Wait 1
+    WebElement("CoverageChangeMenuItem").Click
+    Wait 2
+
+    ' ── Step 4: Verify Coverage Change dialog opened ───────────
+    If Not Page("CoverageChangeDialog").Exist(15) Then
+        Reporter.ReportEvent micFail, "Step 4", "Coverage change dialog did not open"
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 4", "Coverage change dialog is open"
+
+    ' ── Step 5: Select Change Reason ───────────────────────────
+    WebList("ChangeReasonDropdown").Select sChangeReason
+    Wait 1
+
+    ' ── Step 6: Select New Health Plan ─────────────────────────
+    WebList("NewPlanDropdown").Select sNewPlanCode
+    Wait 1
+    If WebList("NewPlanDropdown").GetROProperty("value") <> sNewPlanCode Then
+        Reporter.ReportEvent micFail, "Step 6", "New plan selection failed: " & sNewPlanCode
+        Exit Function
+    End If
+
+    ' ── Step 7: Enter Change Effective Date ────────────────────
+    WebEdit("ChangeEffectiveDateInput").Set sChangeEffectiveDate
+    Wait 1
+
+    ' ── Step 8: Verify effective date rules (no error banner) ──
+    If WebElement("EffectiveDateRuleError").Exist(3) Then
+        Dim sRuleError
+        sRuleError = Browser("Epic").Page("CoverageChangeDialog").WebElement("EffectiveDateRuleError").GetROProperty("innerText")
+        Reporter.ReportEvent micFail, "Step 8", "Effective date rule violation: " & sRuleError
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 8", "Effective date accepted: " & sChangeEffectiveDate
+
+    ' ── Step 9: Click Accept / Save ────────────────────────────
+    WebButton("AcceptChange").Click
+    Wait 3
+
+    ' ── Step 10: Verify coverage updated on chart ───────────────
+    If Not Page("CoverageSection").Exist(15) Then
+        Reporter.ReportEvent micFail, "Step 10", "Coverage section did not refresh after change"
+        Exit Function
+    End If
+
+    Dim sUpdatedPlan
+    sUpdatedPlan = Browser("Epic").Page("CoverageSection").WebElement("PlanNameField").GetROProperty("innerText")
+    If Not (InStr(sUpdatedPlan, sNewPlanCode) > 0) Then
+        Reporter.ReportEvent micFail, "Step 10", "Coverage change not reflected. Got plan: " & sUpdatedPlan
+        Exit Function
+    End If
+
+    ' ── Step 11: Log pass ───────────────────────────────────────
+    Reporter.ReportEvent micPass, "TEST_188005_CoverageChange", _
+        "Coverage changed. MRN: " & sMemberID & _
+        " Old: " & sOldPlanCode & " New: " & sNewPlanCode & _
+        " Effective: " & sChangeEffectiveDate
+
+End Function

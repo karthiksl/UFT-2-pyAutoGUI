@@ -1,0 +1,1012 @@
+# ============================================================
+# Visual Object Repository — Epic Hyperdrive on Citrix / VDI
+# ============================================================
+# All regions are [x, y, width, height] in absolute screen
+# pixels measured from the top-left corner of the physical
+# display (NOT relative to the Citrix window).
+# Captured at: 1920×1080, 100 % DPI, Citrix Workspace 2309.
+# Update `meta.dpi_profile` and retake PNGs after any
+# resolution or DPI policy change.
+# ============================================================
+
+meta:
+  version: 1
+  application: Epic Hyperdrive
+  framework: app_automation_pyautogui
+  dpi_profile: 100          # Windows Display Scale — golden reference
+  resolution: 1920x1080
+  citrix: true
+  notes: >
+    All placeholder images must be re-captured inside the Citrix
+    session on the execution host before first CI run.
+    See automation/README.md §"Adding a new screen".
+
+# ============================================================
+# CITRIX — session-level anchors consumed by core/citrix.py
+# ============================================================
+citrix:
+
+  session_frame:
+    description: >
+      Citrix Workspace toolbar strip that confirms the ICA window
+      is the active foreground window. Matched against the
+      characteristic Citrix gradient / logo element in the top bar.
+    image: citrix_system/session_frame_bar.png   # captured_at: TBD
+    region: [0, 0, 1920, 38]                     # captured_at: 1920x1080
+    min_confidence: 0.82    # lower than default — bar is partly occluded by Epic chrome
+    status: placeholder
+
+  disconnected:
+    description: Full-screen overlay shown when ICA session drops.
+    image: citrix_system/disconnected_overlay.png  # captured_at: TBD
+    region: [600, 350, 720, 200]                   # captured_at: 1920x1080
+    min_confidence: 0.90
+    status: placeholder
+
+  reconnecting:
+    description: Citrix "Reconnecting…" progress dialog.
+    image: citrix_system/reconnecting_dialog.png   # captured_at: TBD
+    region: [660, 380, 600, 160]                   # captured_at: 1920x1080
+    min_confidence: 0.88
+    status: placeholder
+
+  session_locked:
+    description: Windows lock screen rendered inside Citrix session.
+    image: citrix_system/session_locked_screen.png # captured_at: TBD
+    region: [0, 0, 1920, 1080]                     # captured_at: 1920x1080
+    min_confidence: 0.85
+    status: placeholder
+
+  logon_in_progress:
+    description: >
+      Epic SSO / Active Directory logon spinner that appears on
+      cold-start before the Epic Hub loads.
+    image: citrix_system/logon_in_progress.png     # captured_at: TBD
+    region: [760, 440, 400, 120]                   # captured_at: 1920x1080
+    min_confidence: 0.85
+    status: placeholder
+
+# ============================================================
+# BUSY — spinners / loading indicators consumed by core/waits.py
+# ============================================================
+busy:
+
+  epic_spinner:
+    description: >
+      Epic Hyperdrive hourglass / activity ring that blocks the
+      UI during server-side processing (plan changes, saves, etc.).
+    image: busy/epic_activity_spinner.png          # captured_at: TBD
+    region: [860, 490, 200, 100]                   # captured_at: 1920x1080; centre-screen
+    min_confidence: 0.80
+    status: placeholder
+
+  wait_cursor:
+    description: Windows wait cursor arrow overlay (optional probe).
+    image: busy/windows_wait_cursor.png            # captured_at: TBD
+    region: [0, 0, 1920, 1080]                     # full-screen sweep
+    min_confidence: 0.75
+    # lower threshold — cursor may appear anywhere on screen
+    status: placeholder
+
+  modal_loading:
+    description: >
+      Generic Epic modal "Loading…" / "Please wait" banner that
+      overlays the content area during navigation.
+    image: busy/epic_modal_loading_banner.png      # captured_at: TBD
+    region: [560, 420, 800, 140]                   # captured_at: 1920x1080
+    min_confidence: 0.82
+    status: placeholder
+
+# ============================================================
+# SCREENS — logical screen groups; anchors gate navigation
+# ============================================================
+screens:
+
+  epic_login:
+    description: Epic Hyperdrive single-sign-on / credentials screen.
+    anchor:
+      image: anchors/epic_login/epic_logo_header.png   # captured_at: TBD
+      region: [760, 180, 400, 100]                      # captured_at: 1920x1080
+      min_confidence: 0.88
+      status: placeholder
+    next_screens: [epic_home]
+
+  epic_home:
+    description: >
+      Epic Hub dashboard — the landing screen after login showing
+      department activity, recent patients, and quick-launch tiles.
+    anchor:
+      image: anchors/epic_home/epic_hub_header.png     # captured_at: TBD
+      region: [0, 38, 400, 55]                          # captured_at: 1920x1080
+      min_confidence: 0.87
+      status: placeholder
+    next_screens: [member_search]
+
+  member_search:
+    description: >
+      Patient / member lookup screen with name, MRN, and DOB
+      search fields. Entry point for all member-record workflows.
+    anchor:
+      image: anchors/member_search/patient_search_header.png  # captured_at: TBD
+      region: [210, 90, 500, 50]                               # captured_at: 1920x1080
+      min_confidence: 0.87
+      status: placeholder
+    next_screens: [member_chart, member_demographics]
+
+  member_chart:
+    description: >
+      Member chart summary view — shows active coverages, flags,
+      and primary demographic banner.
+    anchor:
+      image: anchors/member_chart/chart_banner_header.png  # captured_at: TBD
+      region: [210, 90, 700, 55]                            # captured_at: 1920x1080
+      min_confidence: 0.86
+      status: placeholder
+    next_screens: [member_demographics, enrollment, coverage_change, notes]
+
+  member_demographics:
+    description: >
+      Demographics tab — address, phone, language preference, and
+      emergency contact; editable fields require a pending change record.
+    anchor:
+      image: anchors/member_demographics/demographics_tab_active.png  # captured_at: TBD
+      region: [210, 130, 300, 45]                                       # captured_at: 1920x1080
+      min_confidence: 0.86
+      status: placeholder
+    next_screens: [member_chart, confirmation]
+
+  enrollment:
+    description: >
+      New member enrollment transaction screen — plan selection,
+      effective date, and group number entry.
+    anchor:
+      image: anchors/enrollment/enrollment_header_banner.png  # captured_at: TBD
+      region: [210, 90, 600, 55]                               # captured_at: 1920x1080
+      min_confidence: 0.87
+      status: placeholder
+    next_screens: [plan_selection, dependent_management, confirmation]
+
+  coverage_change:
+    description: >
+      Coverage change transaction screen — modify plan, tier,
+      or effective date for an existing member record.
+    anchor:
+      image: anchors/coverage_change/coverage_change_header.png  # captured_at: TBD
+      region: [210, 90, 650, 55]                                   # captured_at: 1920x1080
+      min_confidence: 0.87
+      status: placeholder
+    next_screens: [plan_selection, confirmation]
+
+  plan_selection:
+    description: >
+      Plan selection modal / sub-screen — lists available TEST plans
+      with tier and premium columns; user selects a radio row.
+    anchor:
+      image: anchors/plan_selection/plan_grid_header.png  # captured_at: TBD
+      region: [400, 200, 1100, 55]                         # captured_at: 1920x1080
+      min_confidence: 0.86
+      status: placeholder
+    next_screens: [enrollment, coverage_change]
+
+  dependent_management:
+    description: >
+      Add / terminate dependent sub-screen within enrollment;
+      shows dependent list and relationship type dropdown.
+    anchor:
+      image: anchors/dependent_management/dependent_mgmt_header.png  # captured_at: TBD
+      region: [210, 90, 600, 55]                                       # captured_at: 1920x1080
+      min_confidence: 0.86
+      status: placeholder
+    next_screens: [enrollment, confirmation]
+
+  confirmation:
+    description: >
+      Transaction confirmation / success screen — displays a
+      confirmation number and summary of submitted changes.
+    anchor:
+      image: anchors/confirmation/confirmation_banner.png  # captured_at: TBD
+      region: [210, 90, 700, 55]                            # captured_at: 1920x1080
+      min_confidence: 0.88
+      status: placeholder
+    next_screens: [epic_home, member_chart]
+
+  notes:
+    description: >
+      Notes / comments tab on member chart — free-text audit trail
+      entries required by business process after certain transactions.
+    anchor:
+      image: anchors/notes/notes_tab_active.png  # captured_at: TBD
+      region: [210, 130, 200, 45]                 # captured_at: 1920x1080
+      min_confidence: 0.85
+      status: placeholder
+    next_screens: [member_chart]
+
+  error_dialog:
+    description: >
+      Epic error / warning modal dialog — intercepted by the
+      modal-watcher hook; dismiss logic lives in common/dialogs.py.
+    anchor:
+      image: anchors/error_dialog/epic_error_dialog_header.png  # captured_at: TBD
+      region: [560, 300, 800, 60]                                  # captured_at: 1920x1080
+      min_confidence: 0.88
+      status: placeholder
+    next_screens: []    # dismiss always returns to the interrupted screen
+
+# ============================================================
+# OBJECTS — one entry per interactable UI element
+# ============================================================
+# Naming convention: <screen>.<object_name>  (all lowercase, underscores)
+# status:
+#   stable      — PNG captured, confidence tuned, in CI
+#   placeholder — filename reserved; PNG not yet captured
+#   inferred    — object assumed from workflow; screen/coords TBD
+# ============================================================
+objects:
+
+  # ----------------------------------------------------------
+  # epic_login
+  # ----------------------------------------------------------
+  - name: epic_login.username_field
+    screen: epic_login
+    type: input
+    image: objects/epic_login/username_field.png      # captured_at: TBD
+    region: [660, 360, 600, 55]
+    min_confidence: 0.85
+    notes: "SSO username field; may auto-populate from Windows credential manager"
+    status: placeholder
+
+  - name: epic_login.password_field
+    screen: epic_login
+    type: input
+    image: objects/epic_login/password_field.png      # captured_at: TBD
+    region: [660, 430, 600, 55]
+    min_confidence: 0.85
+    notes: "Password field; masked — do not OCR"
+    status: placeholder
+
+  - name: epic_login.login_button
+    screen: epic_login
+    type: button
+    image: objects/epic_login/login_button.png        # captured_at: TBD
+    region: [760, 510, 400, 55]
+    min_confidence: 0.87
+    expect_after: epic_home.hub_header_label
+    notes: "Primary submit; expect hub to load within default_timeout"
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # epic_home
+  # ----------------------------------------------------------
+  - name: epic_home.hub_header_label
+    screen: epic_home
+    type: label
+    image: objects/epic_home/hub_header_label.png     # captured_at: TBD
+    region: [0, 38, 500, 55]
+    min_confidence: 0.87
+    notes: "Used as post-login assertion anchor"
+    status: placeholder
+
+  - name: epic_home.patient_search_button
+    screen: epic_home
+    type: button
+    image: objects/epic_home/patient_search_button.png  # captured_at: TBD
+    region: [210, 90, 200, 45]
+    min_confidence: 0.85
+    expect_after: member_search.search_mrn_field
+    status: placeholder
+
+  - name: epic_home.new_enrollment_tile
+    screen: epic_home
+    type: button
+    image: objects/epic_home/new_enrollment_tile.png  # captured_at: TBD
+    region: [210, 200, 250, 130]
+    min_confidence: 0.83
+    expect_after: enrollment.enrollment_header_label
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # member_search
+  # ----------------------------------------------------------
+  - name: member_search.search_mrn_field
+    screen: member_search
+    type: input
+    image: objects/member_search/search_mrn_field.png  # captured_at: TBD
+    region: [210, 180, 400, 50]
+    min_confidence: 0.85
+    notes: "MRN / member ID lookup field"
+    status: placeholder
+
+  - name: member_search.search_last_name_field
+    screen: member_search
+    type: input
+    image: objects/member_search/search_last_name_field.png  # captured_at: TBD
+    region: [210, 245, 320, 50]
+    min_confidence: 0.85
+    status: placeholder
+
+  - name: member_search.search_first_name_field
+    screen: member_search
+    type: input
+    image: objects/member_search/search_first_name_field.png  # captured_at: TBD
+    region: [545, 245, 280, 50]
+    min_confidence: 0.85
+    status: placeholder
+
+  - name: member_search.search_dob_field
+    screen: member_search
+    type: input
+    image: objects/member_search/search_dob_field.png  # captured_at: TBD
+    region: [210, 310, 200, 50]
+    min_confidence: 0.85
+    notes: "MM/DD/YYYY format enforced by Epic; validate before typing"
+    status: placeholder
+
+  - name: member_search.search_submit_button
+    screen: member_search
+    type: button
+    image: objects/member_search/search_submit_button.png  # captured_at: TBD
+    region: [830, 310, 120, 50]
+    min_confidence: 0.86
+    expect_after: member_search.results_table_first_row
+    status: placeholder
+
+  - name: member_search.results_table_first_row
+    screen: member_search
+    type: table_cell
+    image: objects/member_search/results_first_row_highlight.png  # captured_at: TBD
+    region: [210, 420, 1500, 40]
+    min_confidence: 0.80
+    expect_after: member_chart.chart_banner_label
+    notes: "Click opens chart; row highlight varies by theme — tune confidence"
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # member_chart
+  # ----------------------------------------------------------
+  - name: member_chart.chart_banner_label
+    screen: member_chart
+    type: label
+    image: objects/member_chart/chart_banner_label.png  # captured_at: TBD
+    region: [210, 90, 900, 55]
+    min_confidence: 0.86
+    notes: "Displays member name + MRN; used as navigation assertion"
+    status: placeholder
+
+  - name: member_chart.demographics_tab
+    screen: member_chart
+    type: tab
+    image: objects/member_chart/demographics_tab.png  # captured_at: TBD
+    region: [210, 130, 200, 45]
+    min_confidence: 0.85
+    expect_after: member_demographics.address_line1_field
+    status: placeholder
+
+  - name: member_chart.coverage_tab
+    screen: member_chart
+    type: tab
+    image: objects/member_chart/coverage_tab.png  # captured_at: TBD
+    region: [410, 130, 180, 45]
+    min_confidence: 0.85
+    expect_after: coverage_change.current_plan_label
+    status: placeholder
+
+  - name: member_chart.notes_tab
+    screen: member_chart
+    type: tab
+    image: objects/member_chart/notes_tab.png  # captured_at: TBD
+    region: [590, 130, 150, 45]
+    min_confidence: 0.85
+    expect_after: notes.note_text_area
+    status: placeholder
+
+  - name: member_chart.new_coverage_button
+    screen: member_chart
+    type: button
+    image: objects/member_chart/new_coverage_button.png  # captured_at: TBD
+    region: [1650, 145, 230, 40]
+    min_confidence: 0.84
+    expect_after: enrollment.enrollment_header_label
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # member_demographics
+  # ----------------------------------------------------------
+  - name: member_demographics.address_line1_field
+    screen: member_demographics
+    type: input
+    image: objects/member_demographics/address_line1_field.png  # captured_at: TBD
+    region: [380, 220, 500, 50]
+    min_confidence: 0.84
+    status: placeholder
+
+  - name: member_demographics.address_city_field
+    screen: member_demographics
+    type: input
+    image: objects/member_demographics/address_city_field.png  # captured_at: TBD
+    region: [380, 285, 300, 50]
+    min_confidence: 0.84
+    status: placeholder
+
+  - name: member_demographics.address_state_dropdown
+    screen: member_demographics
+    type: dropdown
+    image: objects/member_demographics/address_state_dropdown.png  # captured_at: TBD
+    region: [695, 285, 100, 50]
+    min_confidence: 0.82
+    status: placeholder
+
+  - name: member_demographics.address_zip_field
+    screen: member_demographics
+    type: input
+    image: objects/member_demographics/address_zip_field.png  # captured_at: TBD
+    region: [810, 285, 130, 50]
+    min_confidence: 0.84
+    status: placeholder
+
+  - name: member_demographics.phone_primary_field
+    screen: member_demographics
+    type: input
+    image: objects/member_demographics/phone_primary_field.png  # captured_at: TBD
+    region: [380, 355, 220, 50]
+    min_confidence: 0.83
+    status: placeholder
+
+  - name: member_demographics.language_preference_dropdown
+    screen: member_demographics
+    type: dropdown
+    image: objects/member_demographics/language_preference_dropdown.png  # captured_at: TBD
+    region: [380, 420, 280, 50]
+    min_confidence: 0.82
+    status: placeholder
+
+  - name: member_demographics.save_button
+    screen: member_demographics
+    type: button
+    image: objects/member_demographics/save_button.png  # captured_at: TBD
+    region: [1750, 940, 130, 45]
+    min_confidence: 0.87
+    expect_after: confirmation.confirmation_number_label
+    status: placeholder
+
+  - name: member_demographics.cancel_button
+    screen: member_demographics
+    type: button
+    image: objects/member_demographics/cancel_button.png  # captured_at: TBD
+    region: [1600, 940, 130, 45]
+    min_confidence: 0.86
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # enrollment
+  # ----------------------------------------------------------
+  - name: enrollment.enrollment_header_label
+    screen: enrollment
+    type: label
+    image: objects/enrollment/enrollment_header_label.png  # captured_at: TBD
+    region: [210, 90, 700, 55]
+    min_confidence: 0.87
+    notes: "Navigation assertion anchor for enrollment screen"
+    status: placeholder
+
+  - name: enrollment.effective_date_field
+    screen: enrollment
+    type: input
+    image: objects/enrollment/effective_date_field.png  # captured_at: TBD
+    region: [380, 195, 200, 50]
+    min_confidence: 0.85
+    notes: "MM/DD/YYYY; Epic validates date range server-side"
+    status: placeholder
+
+  - name: enrollment.group_number_field
+    screen: enrollment
+    type: input
+    image: objects/enrollment/group_number_field.png  # captured_at: TBD
+    region: [380, 260, 220, 50]
+    min_confidence: 0.85
+    status: placeholder
+
+  - name: enrollment.coverage_type_dropdown
+    screen: enrollment
+    type: dropdown
+    image: objects/enrollment/coverage_type_dropdown.png  # captured_at: TBD
+    region: [380, 325, 280, 50]
+    min_confidence: 0.83
+    status: placeholder
+
+  - name: enrollment.select_plan_button
+    screen: enrollment
+    type: button
+    image: objects/enrollment/select_plan_button.png  # captured_at: TBD
+    region: [380, 400, 200, 45]
+    min_confidence: 0.85
+    expect_after: plan_selection.plan_grid_header_label
+    status: placeholder
+
+  - name: enrollment.add_dependent_link
+    screen: enrollment
+    type: link
+    image: objects/enrollment/add_dependent_link.png  # captured_at: TBD
+    region: [380, 590, 220, 40]
+    min_confidence: 0.84
+    expect_after: dependent_management.dependent_list_header_label
+    status: placeholder
+
+  - name: enrollment.submit_enrollment_button
+    screen: enrollment
+    type: button
+    image: objects/enrollment/submit_enrollment_button.png  # captured_at: TBD
+    region: [1750, 940, 160, 45]
+    min_confidence: 0.87
+    expect_after: confirmation.confirmation_number_label
+    status: placeholder
+
+  - name: enrollment.cancel_button
+    screen: enrollment
+    type: button
+    image: objects/enrollment/cancel_button.png  # captured_at: TBD
+    region: [1570, 940, 130, 45]
+    min_confidence: 0.86
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # coverage_change
+  # ----------------------------------------------------------
+  - name: coverage_change.current_plan_label
+    screen: coverage_change
+    type: label
+    image: objects/coverage_change/current_plan_label.png  # captured_at: TBD
+    region: [210, 195, 700, 50]
+    min_confidence: 0.85
+    notes: "Displays active plan name; OCR-validated separately in ocr_targets"
+    status: placeholder
+
+  - name: coverage_change.change_effective_date_field
+    screen: coverage_change
+    type: input
+    image: objects/coverage_change/change_effective_date_field.png  # captured_at: TBD
+    region: [380, 265, 200, 50]
+    min_confidence: 0.85
+    status: placeholder
+
+  - name: coverage_change.change_reason_dropdown
+    screen: coverage_change
+    type: dropdown
+    image: objects/coverage_change/change_reason_dropdown.png  # captured_at: TBD
+    region: [380, 330, 380, 50]
+    min_confidence: 0.82
+    status: placeholder
+
+  - name: coverage_change.new_plan_select_button
+    screen: coverage_change
+    type: button
+    image: objects/coverage_change/new_plan_select_button.png  # captured_at: TBD
+    region: [380, 400, 200, 45]
+    min_confidence: 0.85
+    expect_after: plan_selection.plan_grid_header_label
+    status: placeholder
+
+  - name: coverage_change.submit_change_button
+    screen: coverage_change
+    type: button
+    image: objects/coverage_change/submit_change_button.png  # captured_at: TBD
+    region: [1750, 940, 160, 45]
+    min_confidence: 0.87
+    expect_after: confirmation.confirmation_number_label
+    status: placeholder
+
+  - name: coverage_change.cancel_button
+    screen: coverage_change
+    type: button
+    image: objects/coverage_change/cancel_button.png  # captured_at: TBD
+    region: [1570, 940, 130, 45]
+    min_confidence: 0.86
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # plan_selection
+  # ----------------------------------------------------------
+  - name: plan_selection.plan_grid_header_label
+    screen: plan_selection
+    type: label
+    image: objects/plan_selection/plan_grid_header_label.png  # captured_at: TBD
+    region: [400, 200, 600, 55]
+    min_confidence: 0.87
+    notes: "Navigation assertion for plan grid modal"
+    status: placeholder
+
+  - name: plan_selection.plan_row_radio_first
+    screen: plan_selection
+    type: checkbox
+    image: objects/plan_selection/plan_row_radio_first.png  # captured_at: TBD
+    region: [400, 290, 1100, 40]
+    min_confidence: 0.80
+    notes: >
+      First plan row radio button; parameterised selection by row index
+      is handled in tasks/plan_selection.py, not here
+    status: placeholder
+
+  - name: plan_selection.plan_name_column_header
+    screen: plan_selection
+    type: label
+    image: objects/plan_selection/plan_name_column_header.png  # captured_at: TBD
+    region: [440, 255, 300, 35]
+    min_confidence: 0.84
+    status: placeholder
+
+  - name: plan_selection.select_plan_ok_button
+    screen: plan_selection
+    type: button
+    image: objects/plan_selection/select_plan_ok_button.png  # captured_at: TBD
+    region: [1300, 820, 140, 45]
+    min_confidence: 0.87
+    expect_after: enrollment.enrollment_header_label
+    status: placeholder
+
+  - name: plan_selection.select_plan_cancel_button
+    screen: plan_selection
+    type: button
+    image: objects/plan_selection/select_plan_cancel_button.png  # captured_at: TBD
+    region: [1150, 820, 130, 45]
+    min_confidence: 0.86
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # dependent_management
+  # ----------------------------------------------------------
+  - name: dependent_management.dependent_list_header_label
+    screen: dependent_management
+    type: label
+    image: objects/dependent_management/dependent_list_header_label.png  # captured_at: TBD
+    region: [210, 90, 600, 55]
+    min_confidence: 0.87
+    status: placeholder
+
+  - name: dependent_management.add_dependent_button
+    screen: dependent_management
+    type: button
+    image: objects/dependent_management/add_dependent_button.png  # captured_at: TBD
+    region: [1620, 145, 260, 40]
+    min_confidence: 0.85
+    status: placeholder
+
+  - name: dependent_management.dep_first_name_field
+    screen: dependent_management
+    type: input
+    image: objects/dependent_management/dep_first_name_field.png  # captured_at: TBD
+    region: [380, 230, 280, 50]
+    min_confidence: 0.84
+    status: placeholder
+
+  - name: dependent_management.dep_last_name_field
+    screen: dependent_management
+    type: input
+    image: objects/dependent_management/dep_last_name_field.png  # captured_at: TBD
+    region: [680, 230, 280, 50]
+    min_confidence: 0.84
+    status: placeholder
+
+  - name: dependent_management.dep_dob_field
+    screen: dependent_management
+    type: input
+    image: objects/dependent_management/dep_dob_field.png  # captured_at: TBD
+    region: [380, 295, 180, 50]
+    min_confidence: 0.84
+    status: placeholder
+
+  - name: dependent_management.dep_relationship_dropdown
+    screen: dependent_management
+    type: dropdown
+    image: objects/dependent_management/dep_relationship_dropdown.png  # captured_at: TBD
+    region: [580, 295, 220, 50]
+    min_confidence: 0.82
+    status: placeholder
+
+  - name: dependent_management.dep_save_button
+    screen: dependent_management
+    type: button
+    image: objects/dependent_management/dep_save_button.png  # captured_at: TBD
+    region: [1750, 940, 130, 45]
+    min_confidence: 0.87
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # confirmation
+  # ----------------------------------------------------------
+  - name: confirmation.confirmation_number_label
+    screen: confirmation
+    type: label
+    image: objects/confirmation/confirmation_number_label.png  # captured_at: TBD
+    region: [210, 195, 600, 50]
+    min_confidence: 0.88
+    notes: "Prefix label only; actual number is OCR-read via ocr_targets"
+    status: placeholder
+
+  - name: confirmation.confirmation_status_label
+    screen: confirmation
+    type: label
+    image: objects/confirmation/confirmation_status_label.png  # captured_at: TBD
+    region: [210, 255, 400, 50]
+    min_confidence: 0.87
+    notes: "Displays 'Accepted' or 'Pending'; OCR-validated"
+    status: placeholder
+
+  - name: confirmation.return_to_chart_button
+    screen: confirmation
+    type: button
+    image: objects/confirmation/return_to_chart_button.png  # captured_at: TBD
+    region: [1650, 940, 220, 45]
+    min_confidence: 0.86
+    expect_after: member_chart.chart_banner_label
+    status: placeholder
+
+  - name: confirmation.return_to_home_button
+    screen: confirmation
+    type: button
+    image: objects/confirmation/return_to_home_button.png  # captured_at: TBD
+    region: [1410, 940, 220, 45]
+    min_confidence: 0.86
+    expect_after: epic_home.hub_header_label
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # notes
+  # ----------------------------------------------------------
+  - name: notes.note_text_area
+    screen: notes
+    type: input
+    image: objects/notes/note_text_area.png  # captured_at: TBD
+    region: [210, 200, 1500, 200]
+    min_confidence: 0.82
+    notes: "Multi-line free-text; use type_text with interval=0.02 for speed"
+    status: placeholder
+
+  - name: notes.note_type_dropdown
+    screen: notes
+    type: dropdown
+    image: objects/notes/note_type_dropdown.png  # captured_at: TBD
+    region: [210, 165, 280, 40]
+    min_confidence: 0.83
+    status: placeholder
+
+  - name: notes.save_note_button
+    screen: notes
+    type: button
+    image: objects/notes/save_note_button.png  # captured_at: TBD
+    region: [1750, 415, 130, 45]
+    min_confidence: 0.87
+    status: placeholder
+
+  # ----------------------------------------------------------
+  # error_dialog
+  # ----------------------------------------------------------
+  - name: error_dialog.error_message_label
+    screen: error_dialog
+    type: label
+    image: objects/error_dialog/error_message_label.png  # captured_at: TBD
+    region: [560, 360, 800, 80]
+    min_confidence: 0.80
+    notes: "Label prefix only; full message is OCR-read"
+    status: placeholder
+
+  - name: error_dialog.ok_button
+    screen: error_dialog
+    type: button
+    image: objects/error_dialog/ok_button.png  # captured_at: TBD
+    region: [890, 500, 140, 45]
+    min_confidence: 0.87
+    status: placeholder
+
+  - name: error_dialog.cancel_button
+    screen: error_dialog
+    type: button
+    image: objects/error_dialog/cancel_button.png  # captured_at: TBD
+    region: [740, 500, 130, 45]
+    min_confidence: 0.86
+    status: placeholder
+
+# ============================================================
+# OCR_TARGETS — read-only validation regions
+# All business code calls ocr.assert_text("<name>", actual=...)
+# ============================================================
+ocr_targets:
+
+  - name: member_chart.member_id_display
+    screen: member_chart
+    region: [700, 95, 300, 42]                     # captured_at: 1920x1080
+    expected_pattern: "MRN\\s*:\\s*\\d{6,10}"
+    lang: eng
+    preprocess: [grayscale, upscale_2x, otsu_threshold]
+    min_confidence: 0.70
+    notes: >
+      MRN display in chart banner; Epic custom font at ~11pt needs 2× upscale.
+      Tesseract --psm 7 (single line) recommended.
+    status: placeholder
+
+  - name: member_chart.member_name_display
+    screen: member_chart
+    region: [210, 95, 480, 42]                     # captured_at: 1920x1080
+    expected_pattern: "[A-Z][a-z]+,\\s*[A-Z][a-z]+"
+    lang: eng
+    preprocess: [grayscale, upscale_2x, otsu_threshold]
+    min_confidence: 0.68
+    notes: "Last, First format in chart banner"
+    status: placeholder
+
+  - name: confirmation.confirmation_number_value
+    screen: confirmation
+    region: [210, 195, 600, 50]                    # captured_at: 1920x1080
+    expected_pattern: "(?:Confirmation|Conf\\.?)\\s*#?\\s*:\\s*\\d{8,14}"
+    lang: eng
+    preprocess: [grayscale, upscale_2x, otsu_threshold]
+    min_confidence: 0.70
+    notes: "Confirmation number format varies by transaction type; adjust pattern per flow"
+    status: placeholder
+
+  - name: confirmation.status_value
+    screen: confirmation
+    region: [210, 255, 400, 50]                    # captured_at: 1920x1080
+    expected_pattern: "(?:Accepted|Pending|Rejected)"
+    lang: eng
+    preprocess: [grayscale, upscale_2x, otsu_threshold]
+    min_confidence: 0.72
+    status: placeholder
+
+  - name: coverage_change.current_plan_name_value
+    screen: coverage_change
+    region: [380, 195, 700, 50]                    # captured_at: 1920x1080
+    expected_pattern: "TEST\\s+[A-Z][A-Za-z\\s]+(?:HMO|PPO|HDHP|EPO)"
+    lang: eng
+    preprocess: [grayscale, upscale_2x, gaussian_denoise, otsu_threshold]
+    min_confidence: 0.65
+    notes: >
+      Plan name includes TEST prefix + tier acronym; Citrix JPEG compression
+      artifacts are worst here — gaussian_denoise pass is mandatory.
+    status: placeholder
+
+  - name: enrollment.selected_plan_name_value
+    screen: enrollment
+    region: [380, 460, 700, 50]                    # captured_at: 1920x1080
+    expected_pattern: "TEST\\s+[A-Z][A-Za-z\\s]+(?:HMO|PPO|HDHP|EPO)"
+    lang: eng
+    preprocess: [grayscale, upscale_2x, gaussian_denoise, otsu_threshold]
+    min_confidence: 0.65
+    status: placeholder
+
+  - name: error_dialog.error_message_text
+    screen: error_dialog
+    region: [580, 360, 760, 80]                    # captured_at: 1920x1080
+    expected_pattern: ".+"                         # any non-empty; caller compares after extraction
+    lang: eng
+    preprocess: [grayscale, upscale_2x, otsu_threshold]
+    min_confidence: 0.65
+    notes: "Caller reads text and classifies error; pattern is permissive intentionally"
+    status: placeholder
+
+  - name: member_search.no_results_message
+    screen: member_search
+    region: [210, 420, 800, 45]                    # captured_at: 1920x1080
+    expected_pattern: "No\\s+(?:patients?|records?)\\s+found"
+    lang: eng
+    preprocess: [grayscale, upscale_2x, otsu_threshold]
+    min_confidence: 0.68
+    status: placeholder
+
+  - name: dependent_management.dep_count_label
+    screen: dependent_management
+    region: [210, 155, 300, 38]                    # captured_at: 1920x1080
+    expected_pattern: "Dependents?\\s*\\(\\d+\\)"
+    lang: eng
+    preprocess: [grayscale, upscale_2x, otsu_threshold]
+    min_confidence: 0.68
+    notes: "Shows count in parentheses; assert after each add/remove"
+    status: placeholder
+
+# ============================================================
+# DATA_BINDINGS — logical field → data file column mappings
+# source values match Data/<DataSource>/ directory names
+# ============================================================
+data_bindings:
+
+  # Member identification
+  member_id:
+    source: member_data
+    column: MemberID
+    notes: "Internal TEST MRN; 7–10 digits"
+
+  member_last_name:
+    source: member_data
+    column: LastName
+
+  member_first_name:
+    source: member_data
+    column: FirstName
+
+  member_dob:
+    source: member_data
+    column: DateOfBirth
+    format: "%m/%d/%Y"
+
+  member_ssn:
+    source: member_data
+    column: SSN
+    notes: "Masked in logs; never OCR-read; last-4 only when required by workflow"
+    sensitive: true
+
+  member_address_line1:
+    source: member_data
+    column: AddressLine1
+
+  member_address_city:
+    source: member_data
+    column: City
+
+  member_address_state:
+    source: member_data
+    column: State
+
+  member_address_zip:
+    source: member_data
+    column: ZipCode
+
+  member_phone_primary:
+    source: member_data
+    column: PhonePrimary
+
+  member_language_preference:
+    source: member_data
+    column: LanguagePreference
+
+  # Coverage / enrollment
+  coverage_effective_date:
+    source: coverage_data
+    column: EffectiveDate
+    format: "%m/%d/%Y"
+
+  coverage_type:
+    source: coverage_data
+    column: CoverageType
+    notes: "e.g. Medical, Dental, Vision"
+
+  coverage_group_number:
+    source: coverage_data
+    column: GroupNumber
+
+  plan_name:
+    source: coverage_data
+    column: PlanName
+    notes: "Must match exactly the plan name displayed in plan_selection grid"
+
+  change_reason:
+    source: coverage_data
+    column: ChangeReason
+    notes: "Dropdown value; must match Epic lookup table text exactly"
+
+  # Dependent
+  dep_first_name:
+    source: dependent_data
+    column: DependentFirstName
+
+  dep_last_name:
+    source: dependent_data
+    column: DependentLastName
+
+  dep_dob:
+    source: dependent_data
+    column: DependentDOB
+    format: "%m/%d/%Y"
+
+  dep_relationship:
+    source: dependent_data
+    column: RelationshipType
+    notes: "e.g. Spouse, Child, Domestic Partner"
+
+  # Test metadata
+  test_case_id:
+    source: member_data
+    column: TestCaseID
+    notes: "TEST_188xxx identifier; used for report labelling"
+
+  expected_confirmation_status:
+    source: coverage_data
+    column: ExpectedStatus
+    notes: "Accepted|Pending; compared against confirmation.status_value OCR result"

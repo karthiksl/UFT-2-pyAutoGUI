@@ -1,0 +1,40 @@
+# Visual Object Repository — Epic Hyperdrive on Citrix
+# Schema version: 1.0
+# Populated in Prompt 03.
+#
+# Each entry under `objects` must have:
+#   name:           unique logical name (snake_case)
+#   screen:         logical screen group this object belongs to
+#   image:          path to reference PNG relative to assets/images/
+#   region:         {x, y, width, height} bounding box in Citrix session pixels
+#   min_confidence: float in (0, 1] — match threshold for this anchor
+#
+# Optional keys (passed through to ObjectSpec.metadata):
+#   description:    human-readable purpose
+#   tags:           list of strings for filtering
+
+schema_version: "1.0"
+
+objects: []
+# TODO(prompt-03): populate with actual Epic Hyperdrive screen anchors.
+# Example structure (do not use these coordinates — placeholders only):
+#
+# - name: login_username_field
+#   screen: epic_login
+#   image: epic_login/username_field.png
+#   region: {x: 400, y: 300, width: 400, height: 60}
+#   min_confidence: 0.88
+#   description: "Username input on Epic Hyperdrive login screen"
+#
+# - name: login_password_field
+#   screen: epic_login
+#   image: epic_login/password_field.png
+#   region: {x: 400, y: 380, width: 400, height: 60}
+#   min_confidence: 0.88
+#
+# - name: citrix_disconnected_overlay
+#   screen: citrix_system
+#   image: citrix_system/disconnected_banner.png
+#   region: {x: 0, y: 0, width: 1920, height: 1080}
+#   min_confidence: 0.90
+#   description: "Full-screen overlay shown when Citrix session disconnects"

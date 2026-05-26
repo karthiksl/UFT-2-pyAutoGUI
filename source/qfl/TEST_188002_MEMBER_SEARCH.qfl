@@ -1,0 +1,74 @@
+' ============================================================
+' QFL File  : TEST_188002_MEMBER_SEARCH.qfl
+' Test ID   : TEST-188002
+' Screen    : Epic Hyperdrive Member Search
+' Purpose   : Search for a member by MRN, verify the patient
+'             banner shows the correct name and date of birth.
+' Author    : UFT Automation Team
+' Date      : 2024-01-15
+' ============================================================
+
+Public Function TEST_188002_MemberSearch()
+
+    ' ── Load test data ─────────────────────────────────────────
+    Dim sMRN, sLastName, sFirstName, sDateOfBirth
+    sMRN         = DataTable("MemberID",    dtLocalSheet)
+    sLastName    = DataTable("LastName",    dtLocalSheet)
+    sFirstName   = DataTable("FirstName",   dtLocalSheet)
+    sDateOfBirth = DataTable("DateOfBirth", dtLocalSheet)
+
+    ' ── Step 1: Navigate to Member Search ──────────────────────
+    If Not Page("EpicHome").Exist(10) Then
+        Reporter.ReportEvent micFail, "Step 1", "Epic home screen not visible"
+        Exit Function
+    End If
+    WebElement("PatientSearchBar").Click
+    Wait 1
+
+    ' ── Step 2: Type MRN into search box ───────────────────────
+    WebEdit("MRNSearchInput").Set sMRN
+    Wait 1
+
+    ' ── Step 3: Click Search button ────────────────────────────
+    WebButton("SearchButton").Click
+    Wait 2
+
+    ' ── Step 4: Verify search results appear ───────────────────
+    If Not Page("SearchResults").Exist(10) Then
+        Reporter.ReportEvent micFail, "Step 4", "Search results did not load for MRN: " & sMRN
+        Exit Function
+    End If
+
+    ' ── Step 5: Click first result row ─────────────────────────
+    WebElement("FirstResultRow").Click
+    Wait 2
+
+    ' ── Step 6: Verify member chart opened ─────────────────────
+    If Not Page("MemberChart").Exist(15) Then
+        Reporter.ReportEvent micFail, "Step 6", "Member chart did not open"
+        Exit Function
+    End If
+
+    ' ── Step 7: Assert patient name in banner ──────────────────
+    Dim sBannerText
+    sBannerText = Browser("Epic").Page("MemberChart").WebElement("PatientBanner").GetROProperty("innerText")
+    If Not (InStr(sBannerText, sLastName) > 0) Then
+        Reporter.ReportEvent micFail, "Step 7", "Last name not found in banner. Banner: " & sBannerText
+        Exit Function
+    End If
+    If Not (InStr(sBannerText, sFirstName) > 0) Then
+        Reporter.ReportEvent micFail, "Step 7", "First name not found in banner. Banner: " & sBannerText
+        Exit Function
+    End If
+
+    ' ── Step 8: Assert date of birth in banner ─────────────────
+    If Not (InStr(sBannerText, sDateOfBirth) > 0) Then
+        Reporter.ReportEvent micFail, "Step 8", "DOB not found in banner. Expected: " & sDateOfBirth
+        Exit Function
+    End If
+
+    ' ── Step 9: Log pass ────────────────────────────────────────
+    Reporter.ReportEvent micPass, "TEST_188002_MemberSearch", _
+        "Member found and verified: " & sFirstName & " " & sLastName & " MRN: " & sMRN
+
+End Function

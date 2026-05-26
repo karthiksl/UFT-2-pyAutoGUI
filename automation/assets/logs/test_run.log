@@ -1,0 +1,145 @@
+2026-05-25 15:01:01.122 | INFO     | automation.tests.conftest:32 — framework: initialised (log_level=INFO)
+2026-05-25 15:01:01.364 | ERROR    | automation.tests.conftest:85 — failure screenshot → assets/screenshots/20260525_150101_194924_FAIL_test_non_string_attributes_ignored.png
+2026-05-25 15:01:01.548 | ERROR    | automation.tests.conftest:85 — failure screenshot → assets/screenshots/20260525_150101_391666_FAIL_test_or_names_follow_convention[automation.common.poms.member_demographics].png
+2026-05-25 15:01:01.573 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | [TC001] Step 1 — details
+2026-05-25 15:01:01.574 | ERROR    | automation.common.reporting_legacy:83 — REPORT FAIL  | Bad step — something broke
+2026-05-25 15:01:01.575 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | step
+2026-05-25 15:01:01.576 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step — detail
+2026-05-25 15:01:01.576 | INFO     | automation.common.reporting_legacy:89 — REPORT INFO  | Info step
+2026-05-25 15:01:01.577 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step
+2026-05-25 15:01:01.578 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | s
+2026-05-25 15:01:01.724 | ERROR    | automation.tests.conftest:85 — failure screenshot → assets/screenshots/20260525_150101_589161_FAIL_test_exact_length_value.png
+2026-05-25 15:01:01.735 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 1/3 failed (ValueError); retrying in 0.06s
+2026-05-25 15:01:01.794 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 2/3 failed (ValueError); retrying in 0.21s
+2026-05-25 15:01:02.013 | WARNING  | automation.common.utils:150 — retry_with_jitter: op attempt 1/2 failed (RuntimeError); retrying in 0.18s
+2026-05-25 15:01:59.864 | INFO     | automation.tests.conftest:32 — framework: initialised (log_level=INFO)
+2026-05-25 15:01:59.942 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | [TC001] Step 1 — details
+2026-05-25 15:01:59.943 | ERROR    | automation.common.reporting_legacy:83 — REPORT FAIL  | Bad step — something broke
+2026-05-25 15:01:59.944 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | step
+2026-05-25 15:01:59.945 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step — detail
+2026-05-25 15:01:59.945 | INFO     | automation.common.reporting_legacy:89 — REPORT INFO  | Info step
+2026-05-25 15:01:59.946 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step
+2026-05-25 15:01:59.947 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | s
+2026-05-25 15:01:59.967 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 1/3 failed (ValueError); retrying in 0.01s
+2026-05-25 15:01:59.979 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 2/3 failed (ValueError); retrying in 0.13s
+2026-05-25 15:02:00.117 | WARNING  | automation.common.utils:150 — retry_with_jitter: op attempt 1/2 failed (RuntimeError); retrying in 0.01s
+2026-05-25 15:02:07.371 | INFO     | automation.tests.conftest:32 — framework: initialised (log_level=INFO)
+2026-05-25 15:02:07.452 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | [TC001] Step 1 — details
+2026-05-25 15:02:07.452 | ERROR    | automation.common.reporting_legacy:83 — REPORT FAIL  | Bad step — something broke
+2026-05-25 15:02:07.454 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | step
+2026-05-25 15:02:07.454 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step — detail
+2026-05-25 15:02:07.455 | INFO     | automation.common.reporting_legacy:89 — REPORT INFO  | Info step
+2026-05-25 15:02:07.456 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step
+2026-05-25 15:02:07.456 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | s
+2026-05-25 15:02:07.476 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 1/3 failed (ValueError); retrying in 0.14s
+2026-05-25 15:02:07.620 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 2/3 failed (ValueError); retrying in 0.20s
+2026-05-25 15:02:07.833 | WARNING  | automation.common.utils:150 — retry_with_jitter: op attempt 1/2 failed (RuntimeError); retrying in 0.05s
+2026-05-25 15:02:08.040 | WARNING  | automation.core.ocr:200 — ocr._preprocess: unknown step 'nonexistent_step' — skipping
+2026-05-25 15:02:08.062 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.850 attempt=1
+2026-05-25 15:02:08.063 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.850 attempt=1
+2026-05-25 15:02:08.064 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:02:08.066 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:02:08.067 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:02:08.069 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:02:08.070 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:02:08.071 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:02:08.073 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:02:08.075 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:02:08.077 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 400, 80)' conf=0.400 attempt=1
+2026-05-25 15:02:08.078 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.900 attempt=1
+2026-05-25 15:02:08.080 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.550 attempt=1
+2026-05-25 15:02:08.082 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.300 attempt=1
+2026-05-25 15:02:08.083 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:02:08.097 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:02:08.123 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.920 attempt=3
+2026-05-25 15:02:08.125 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:02:08.139 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:02:08.166 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:02:08.168 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/2 failed (OcrTextMismatchError) — retrying in 0.01s
+2026-05-25 15:02:08.182 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 2 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:02:08.184 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:02:08.186 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:02:08.187 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:02:08.189 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.50s
+2026-05-25 15:02:08.191 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 1.00s
+2026-05-25 15:02:08.192 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:09:45.149 | INFO     | automation.tests.conftest:32 — framework: initialised (log_level=INFO)
+2026-05-25 15:09:45.230 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | [TC001] Step 1 — details
+2026-05-25 15:09:45.230 | ERROR    | automation.common.reporting_legacy:83 — REPORT FAIL  | Bad step — something broke
+2026-05-25 15:09:45.232 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | step
+2026-05-25 15:09:45.232 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step — detail
+2026-05-25 15:09:45.233 | INFO     | automation.common.reporting_legacy:89 — REPORT INFO  | Info step
+2026-05-25 15:09:45.233 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step
+2026-05-25 15:09:45.234 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | s
+2026-05-25 15:09:45.254 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 1/3 failed (ValueError); retrying in 0.05s
+2026-05-25 15:09:45.307 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 2/3 failed (ValueError); retrying in 0.03s
+2026-05-25 15:09:45.337 | WARNING  | automation.common.utils:150 — retry_with_jitter: op attempt 1/2 failed (RuntimeError); retrying in 0.22s
+2026-05-25 15:09:45.721 | WARNING  | automation.core.ocr:200 — ocr._preprocess: unknown step 'nonexistent_step' — skipping
+2026-05-25 15:09:45.741 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.850 attempt=1
+2026-05-25 15:09:45.742 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.850 attempt=1
+2026-05-25 15:09:45.743 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:09:45.745 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:09:45.746 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:09:45.748 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:09:45.749 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:09:45.750 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:09:45.752 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:09:45.754 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:09:45.756 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 400, 80)' conf=0.400 attempt=1
+2026-05-25 15:09:45.758 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.900 attempt=1
+2026-05-25 15:09:45.760 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.550 attempt=1
+2026-05-25 15:09:45.761 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.300 attempt=1
+2026-05-25 15:09:45.763 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:09:45.777 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:09:45.804 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.920 attempt=3
+2026-05-25 15:09:45.806 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:09:45.820 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:09:45.846 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:09:45.848 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/2 failed (OcrTextMismatchError) — retrying in 0.01s
+2026-05-25 15:09:45.862 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 2 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:09:45.864 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:09:45.866 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:09:45.867 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:09:45.869 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.50s
+2026-05-25 15:09:45.870 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 1.00s
+2026-05-25 15:09:45.871 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:10:17.108 | INFO     | automation.tests.conftest:32 — framework: initialised (log_level=INFO)
+2026-05-25 15:10:17.188 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | [TC001] Step 1 — details
+2026-05-25 15:10:17.188 | ERROR    | automation.common.reporting_legacy:83 — REPORT FAIL  | Bad step — something broke
+2026-05-25 15:10:17.190 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | step
+2026-05-25 15:10:17.190 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step — detail
+2026-05-25 15:10:17.191 | INFO     | automation.common.reporting_legacy:89 — REPORT INFO  | Info step
+2026-05-25 15:10:17.191 | WARNING  | automation.common.reporting_legacy:85 — REPORT WARN  | warn step
+2026-05-25 15:10:17.192 | SUCCESS  | automation.common.reporting_legacy:87 — REPORT PASS  | s
+2026-05-25 15:10:17.212 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 1/3 failed (ValueError); retrying in 0.18s
+2026-05-25 15:10:17.402 | WARNING  | automation.common.utils:150 — retry_with_jitter: retry_test attempt 2/3 failed (ValueError); retrying in 0.08s
+2026-05-25 15:10:17.493 | WARNING  | automation.common.utils:150 — retry_with_jitter: op attempt 1/2 failed (RuntimeError); retrying in 0.12s
+2026-05-25 15:10:17.757 | WARNING  | automation.core.ocr:200 — ocr._preprocess: unknown step 'nonexistent_step' — skipping
+2026-05-25 15:10:17.776 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.850 attempt=1
+2026-05-25 15:10:17.778 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.850 attempt=1
+2026-05-25 15:10:17.779 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:10:17.781 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:10:17.782 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:10:17.783 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.900 attempt=1
+2026-05-25 15:10:17.785 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:10:17.786 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:10:17.788 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:10:17.790 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 1 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:10:17.792 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 400, 80)' conf=0.400 attempt=1
+2026-05-25 15:10:17.793 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.900 attempt=1
+2026-05-25 15:10:17.796 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.550 attempt=1
+2026-05-25 15:10:17.797 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='test_screen.label' conf=0.300 attempt=1
+2026-05-25 15:10:17.799 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:10:17.811 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:10:17.837 | INFO     | automation.core.ocr:524 — ocr.assert_text: PASS target='(0, 0, 600, 100)' conf=0.920 attempt=3
+2026-05-25 15:10:17.839 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:10:17.853 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:10:17.879 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:10:17.881 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/2 failed (OcrTextMismatchError) — retrying in 0.01s
+2026-05-25 15:10:17.895 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 2 attempts exhausted for '(0, 0, 600, 100)'
+2026-05-25 15:10:17.898 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.01s
+2026-05-25 15:10:17.899 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 0.02s
+2026-05-25 15:10:17.900 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'
+2026-05-25 15:10:17.903 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 1/3 failed (OcrLowConfidenceError) — retrying in 0.50s
+2026-05-25 15:10:17.904 | WARNING  | automation.core.ocr:534 — ocr.assert_text: attempt 2/3 failed (OcrLowConfidenceError) — retrying in 1.00s
+2026-05-25 15:10:17.905 | ERROR    | automation.core.ocr:540 — ocr.assert_text: all 3 attempts exhausted for '(0, 0, 400, 80)'

@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: uft-hyperdrive-automation
+Version: 0.1.0
+Summary: UFT One → PyAutoGUI migration framework for Epic Hyperdrive on Citrix
+Requires-Python: >=3.9
+Requires-Dist: pyautogui>=0.9.54
+Requires-Dist: opencv-python>=4.9
+Requires-Dist: numpy>=1.26
+Requires-Dist: Pillow>=10.3
+Requires-Dist: pytesseract>=0.3.10
+Requires-Dist: pygetwindow>=0.0.9
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: openpyxl>=3.1
+Requires-Dist: pandas>=2.2
+Requires-Dist: rich>=13.7
+Requires-Dist: loguru>=0.7
+Requires-Dist: strenum>=0.4.15; python_version < "3.11"
+Provides-Extra: windows
+Requires-Dist: pywinauto>=0.6.8; extra == "windows"
+Provides-Extra: test
+Requires-Dist: pytest>=8.2; extra == "test"
+Requires-Dist: pytest-mock>=3.14; extra == "test"
+Requires-Dist: allure-pytest>=2.13; extra == "test"
+Provides-Extra: dev
+Requires-Dist: ruff>=0.4; extra == "dev"
+Requires-Dist: mypy>=1.10; extra == "dev"
+Requires-Dist: pre-commit>=3.7; extra == "dev"

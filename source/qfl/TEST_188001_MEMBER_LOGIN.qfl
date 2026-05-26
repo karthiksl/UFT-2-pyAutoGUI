@@ -1,0 +1,56 @@
+' ============================================================
+' QFL File  : TEST_188001_MEMBER_LOGIN.qfl
+' Test ID   : TEST-188001
+' Screen    : Epic Hyperdrive Login
+' Purpose   : Launch Epic Hyperdrive, enter credentials,
+'             verify successful login and home screen load.
+' Author    : UFT Automation Team
+' Date      : 2024-01-15
+' ============================================================
+
+Public Function TEST_188001_MemberLogin()
+
+    ' ── Load test data from DataTable ──────────────────────────
+    Dim sUsername, sPassword, sExpectedTitle
+    sUsername     = DataTable("Username",     dtLocalSheet)
+    sPassword     = DataTable("Password",     dtLocalSheet)
+    sExpectedTitle = DataTable("ExpectedTitle", dtLocalSheet)
+
+    ' ── Step 1: Confirm Epic login screen is visible ────────────
+    If Not Page("EpicLogin").Exist(15) Then
+        Reporter.ReportEvent micFail, "Step 1", "Epic login screen did not appear within 15 seconds"
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 1", "Epic login screen is visible"
+
+    ' ── Step 2: Enter Username ──────────────────────────────────
+    WebEdit("Username").Set sUsername
+    Wait 1
+
+    ' ── Step 3: Enter Password ──────────────────────────────────
+    WebEdit("Password").Set sPassword
+    Wait 1
+
+    ' ── Step 4: Click Sign In button ───────────────────────────
+    WebButton("SignIn").Click
+    Wait 3
+
+    ' ── Step 5: Verify Home screen loaded ──────────────────────
+    If Not Page("EpicHome").Exist(20) Then
+        Reporter.ReportEvent micFail, "Step 5", "Epic home screen did not load after login"
+        Exit Function
+    End If
+
+    ' ── Step 6: Assert page title contains expected text ───────
+    Dim sActualTitle
+    sActualTitle = Browser("Epic").Page("EpicHome").GetROProperty("title")
+    If Not (InStr(sActualTitle, sExpectedTitle) > 0) Then
+        Reporter.ReportEvent micFail, "Step 6", "Title mismatch. Expected: " & sExpectedTitle & " Got: " & sActualTitle
+        Exit Function
+    End If
+
+    ' ── Step 7: Log pass ────────────────────────────────────────
+    Reporter.ReportEvent micPass, "TEST_188001_MemberLogin", _
+        "Login successful for user: " & sUsername
+
+End Function

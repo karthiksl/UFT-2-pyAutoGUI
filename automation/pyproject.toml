@@ -1,0 +1,90 @@
+# pyproject.toml chosen over requirements.txt because:
+# 1. PEP 517/518 build metadata (name, version, Python floor) travels with the package.
+# 2. Optional dependency groups ([test], [dev]) keep CI installs lean.
+# 3. tool.pytest.ini_options keeps all test config in one file.
+# 4. Still pip-installable with `pip install -e .[test]` — no new tooling required.
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uft-hyperdrive-automation"
+version = "0.1.0"
+description = "UFT One → PyAutoGUI migration framework for Epic Hyperdrive on Citrix"
+requires-python = ">=3.9"
+
+dependencies = [
+    "pyautogui>=0.9.54",
+    "opencv-python>=4.9",
+    "numpy>=1.26",
+    "Pillow>=10.3",
+    "pytesseract>=0.3.10",
+    "pygetwindow>=0.0.9",
+    "pyyaml>=6.0",
+    "openpyxl>=3.1",
+    "pandas>=2.2",
+    "rich>=13.7",
+    "loguru>=0.7",
+    "strenum>=0.4.15 ; python_version < '3.11'",  # StrEnum is stdlib in 3.11
+]
+
+[project.optional-dependencies]
+windows = [
+    "pywinauto>=0.6.8",
+]
+test = [
+    "pytest>=8.2",
+    "pytest-mock>=3.14",
+    "allure-pytest>=2.13",
+]
+dev = [
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+]
+
+[project.scripts]
+automation-run = "automation.run:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["automation*"]
+
+# ---------------------------------------------------------------------------
+# pytest configuration
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["automation/tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-ra -q"
+markers = [
+    "smoke: fast sanity tests — safe to run before full regression",
+    "regression: full regression suite",
+    "suite_enrollment: member enrollment flow tests",
+    "suite_coverage: coverage change flow tests",
+    "e2e_sample: end-to-end dry-run against fixtures/sample_uft/screen_player.py",
+]
+log_cli = true
+log_cli_level = "INFO"
+
+# ---------------------------------------------------------------------------
+# ruff linting
+# ---------------------------------------------------------------------------
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+# ---------------------------------------------------------------------------
+# mypy
+# ---------------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true

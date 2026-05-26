@@ -1,0 +1,70 @@
+' ============================================================
+' QFL File  : TEST_188003_COVERAGE_VERIFY.qfl
+' Test ID   : TEST-188003
+' Screen    : Epic Coverage Tab
+' Purpose   : From the open member chart, navigate to the
+'             Coverage tab and verify the plan name and
+'             coverage effective date match the data sheet.
+' Author    : UFT Automation Team
+' Date      : 2024-01-15
+' ============================================================
+
+Public Function TEST_188003_CoverageVerify()
+
+    ' ── Load test data ─────────────────────────────────────────
+    Dim sCoverageEffectiveDate, sExpectedPlanName, sExpectedStatus
+    sCoverageEffectiveDate = DataTable("CoverageEffectiveDate", dtLocalSheet)
+    sExpectedPlanName      = DataTable("PlanName",              dtLocalSheet)
+    sExpectedStatus        = DataTable("ExpectedStatus",        dtLocalSheet)
+
+    ' ── Step 1: Confirm member chart is open ───────────────────
+    If Not Page("MemberChart").Exist(10) Then
+        Reporter.ReportEvent micFail, "Step 1", "Member chart is not open"
+        Exit Function
+    End If
+
+    ' ── Step 2: Click Coverage tab ─────────────────────────────
+    WebElement("CoverageTab").Click
+    Wait 2
+
+    ' ── Step 3: Verify Coverage section loaded ─────────────────
+    If Not Page("CoverageSection").Exist(10) Then
+        Reporter.ReportEvent micFail, "Step 3", "Coverage section did not load"
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 3", "Coverage section loaded"
+
+    ' ── Step 4: Read and assert Effective Date ─────────────────
+    Dim sActualDate
+    sActualDate = Browser("Epic").Page("CoverageSection").WebElement("EffectiveDateField").GetROProperty("innerText")
+    If sActualDate <> sCoverageEffectiveDate Then
+        Reporter.ReportEvent micFail, "Step 4", _
+            "Effective date mismatch. Expected: " & sCoverageEffectiveDate & " Got: " & sActualDate
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 4", "Effective date verified: " & sActualDate
+
+    ' ── Step 5: Read and assert Plan Name ──────────────────────
+    Dim sActualPlan
+    sActualPlan = Browser("Epic").Page("CoverageSection").WebElement("PlanNameField").GetROProperty("innerText")
+    If Not (InStr(sActualPlan, sExpectedPlanName) > 0) Then
+        Reporter.ReportEvent micFail, "Step 5", _
+            "Plan name mismatch. Expected: " & sExpectedPlanName & " Got: " & sActualPlan
+        Exit Function
+    End If
+    Reporter.ReportEvent micPass, "Step 5", "Plan name verified: " & sActualPlan
+
+    ' ── Step 6: Read and assert Coverage Status ────────────────
+    Dim sActualStatus
+    sActualStatus = Browser("Epic").Page("CoverageSection").WebElement("CoverageStatusField").GetROProperty("innerText")
+    If Not (InStr(sActualStatus, sExpectedStatus) > 0) Then
+        Reporter.ReportEvent micFail, "Step 6", _
+            "Status mismatch. Expected: " & sExpectedStatus & " Got: " & sActualStatus
+        Exit Function
+    End If
+
+    ' ── Step 7: Log pass ────────────────────────────────────────
+    Reporter.ReportEvent micPass, "TEST_188003_CoverageVerify", _
+        "Coverage verified. Plan: " & sActualPlan & " Effective: " & sActualDate & " Status: " & sActualStatus
+
+End Function

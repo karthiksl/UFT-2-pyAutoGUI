@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+uft_hyperdrive_automation.egg-info/PKG-INFO
+uft_hyperdrive_automation.egg-info/SOURCES.txt
+uft_hyperdrive_automation.egg-info/dependency_links.txt
+uft_hyperdrive_automation.egg-info/entry_points.txt
+uft_hyperdrive_automation.egg-info/requires.txt
+uft_hyperdrive_automation.egg-info/top_level.txt
